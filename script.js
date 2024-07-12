@@ -1,22 +1,16 @@
-let imageContainer = document.querySelector('.image-carousel');
-let  leftButton = document.querySelector('#left');
-let rightButton = document.querySelector('#right');
-let images = document.querySelectorAll('.image-carousel img');
+// script.js
 let currentIndex = 0;
 
-
-leftButton.addEventListener('click', left);
-rightButton.addEventListener('click', right);
-
-
-function showImage(index){
-    images.forEach((img, i ) =>{
-        img.style.display  = 'none';
-    });
-
-    if(images[index]){
-        images[index].style.display = 'block';
-    }
+function moveRight() {
+    const carousel = document.getElementById('carousel');
+    const images = carousel.getElementsByTagName('img');
+    currentIndex = (currentIndex + 1) % images.length;
+    carousel.style.transform = `translateX(-${currentIndex * 60}vw)`;
 }
 
-showImage(0);
+function moveLeft() {
+    const carousel = document.getElementById('carousel');
+    const images = carousel.getElementsByTagName('img');
+    currentIndex = (currentIndex - 1 + images.length) % images.length;
+    carousel.style.transform = `translateX(-${currentIndex * 60}vw)`;
+}

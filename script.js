@@ -1,22 +1,40 @@
-let imageContainer = document.querySelector('.image-carousel');
-let  leftButton = document.querySelector('#left');
-let rightButton = document.querySelector('#right');
-let images = document.querySelectorAll('.image-carousel img');
-let currentIndex = 0;
+let lineCont = document.querySelector(".line-cont");
+let menuOpen = false;
 
-
-leftButton.addEventListener('click', left);
-rightButton.addEventListener('click', right);
-
-
-function showImage(index){
-    images.forEach((img, i ) =>{
-        img.style.display  = 'none';
-    });
-
-    if(images[index]){
-        images[index].style.display = 'block';
+lineCont.addEventListener('click', () => {
+    if (!menuOpen) {
+        lineCont.classList.add('open');
+        menuOpen = true;
+    } else {
+        lineCont.classList.remove('open');
+        menuOpen = false;
     }
+});
+
+
+let currentSlide = 0;
+const slides = document.querySelectorAll('.image-carousel img');
+const totalSlides = slides.length;
+const imageCarousel = document.querySelector('.image-carousel');
+
+function updateCarouselPosition() {
+    imageCarousel.style.transform = `translateX(-${currentSlide * 100}%)`;
 }
 
-showImage(0);
+function left() {
+    currentSlide = (currentSlide > 0) ? currentSlide - 1 :0;
+    imageCarousel.style.transform = `translateX(-${currentSlide * 100}%)`;
+    updateCarouselPosition();
+}
+
+function right() {
+    currentSlide =  (currentSlide < totalSlides - 1) ? currentSlide + 1 : 0;
+    imageCarousel.style.transform = `translateX(-${currentSlide * 100}%)`; 
+    updateCarouselPosition();
+    setTimeout(right , 3000);
+}
+
+
+updateCarouselPosition();
+// Start the automatic movement
+setTimeout(right , 3000);
